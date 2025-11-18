@@ -23,3 +23,16 @@ export const insights = sqliteTable('insights', {
     .notNull()
     .default(sql`(strftime('%s','now')*1000)`)
 });
+
+export const tasks = sqliteTable('tasks', {
+  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  insightId: text('insight_id').notNull(),                     // FK to insights.id (soft-checked)
+  type: text('type').notNull(),                                // 'follow-up' | 'meeting' | 'proposal' | 'internal' | 'research'
+  title: text('title').notNull(),                              // human-friendly description
+  owner: text('owner'),                                        // Slack user id or email (optional now)
+  dueAt: integer('due_at', { mode: 'timestamp_ms' }),          // suggested due
+  status: text('status').notNull().default('new'),             // 'new' | 'in_progress' | 'completed' | 'parked'
+  createdAt: integer('created_at', { mode: 'timestamp_ms' })
+    .notNull()
+    .default(sql`(strftime('%s','now')*1000)`)
+});

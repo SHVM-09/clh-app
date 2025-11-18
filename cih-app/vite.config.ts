@@ -19,7 +19,7 @@ export default defineConfig({
       NGROK_HOST
     ],
     // helps HMR behind HTTPS tunnels
-    hmr: { clientPort: 443 }
+    // hmr: { clientPort: 443 }
   },
 
   // (optional) same relaxations for `pnpm preview`
